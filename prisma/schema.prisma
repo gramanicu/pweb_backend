@@ -9,3 +9,13 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Country {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(255) @unique
+}
+
+model Language {
+  id Int @id @default(autoincrement())
+  name String @db.VarChar(255) @unique
+}
