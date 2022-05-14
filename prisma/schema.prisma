@@ -13,9 +13,27 @@ datasource db {
 model Country {
   id Int @id @default(autoincrement())
   name String @db.VarChar(255) @unique
+  refugees Refugees[]
 }
 
 model Language {
   id Int @id @default(autoincrement())
   name String @db.VarChar(255) @unique
+  refugees  Refugees[]
+}
+
+model Refugees {
+  id String @db.VarChar(255) @id
+  phone String? @db.VarChar(255)
+  email String? @db.VarChar(255)
+  name String @db.VarChar(255)
+  id_country Int
+  id_language Int 
+  no_adults Int? @default(1)
+  no_children Int? @default(0)
+  notes String @db.VarChar(255)
+  id_loc Int? 
+
+  country Country @relation(fields: [id_country], references: [id])
+  language Language @relation(fields: [id_language], references: [id])
 }
