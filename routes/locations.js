@@ -1,13 +1,10 @@
-const router = require("express").Router
-const { PrismaClient} = require("@prisma/client")
+import express from 'express';
+import { PrismaClient } from '@prisma/client';
+import LocationController from '../controllers/locationController.js';
 
-const prisma = new PrismaClient();
+const LocationRouter = express.Router();
 
-router.get('/', async (req, res) => {
-    const locations = await prisma.location.findMany()
-    
-    res.json(locations)
-})
+LocationRouter.get('/', LocationController.getLocations);
 
 
-module.exports = router
+export default LocationRouter;

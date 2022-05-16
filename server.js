@@ -4,6 +4,8 @@ import helmet from 'helmet';
 import * as dotenv from 'dotenv';
 import { auth, claimCheck, claimIncludes } from 'express-oauth2-jwt-bearer';
 
+import LocationRouter from './routes/locations.js';
+
 dotenv.config();
 
 if (!process.env.ISSUER_BASE_URL || !process.env.AUDIENCE) {
@@ -21,7 +23,6 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
-app.use('/locations', require("./routes/locations"))
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);
@@ -44,3 +45,5 @@ app.get(
         });
     }
 );
+
+app.use('/locations', LocationRouter);
