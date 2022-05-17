@@ -81,7 +81,7 @@ model Location {
 model Service {
   id Int @default(autoincrement())
   id_loc Int
-  type Int
+  type serviceTypes
   description String @db.VarChar(255)
   id_provider Int
 
@@ -103,3 +103,11 @@ model AccomodationRequest {
   @@map("accomodationRequest")
 }
 
+enum serviceTypes {
+  GENERIC
+  FOOD
+  CLOTHES
+  MEDICAL_SERVICE
+  TRANSLATION_SERVICE
+  LEISURE
+}
