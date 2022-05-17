@@ -8,7 +8,7 @@ import checkJwt from "../middlewares/checkJwt.js";
 const router = express.Router();
 
 router.use('/locations', checkJwt, LocationRouter);
-router.use('/users', checkJwt, UserRouter);
+router.use('/users', UserRouter);
 router.use('/services', checkJwt, ServiceRouter);
 router.use('/accomodation-request', checkJwt, AccomodationRequestRouter);
 

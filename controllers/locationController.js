@@ -1,6 +1,4 @@
-import { PrismaClient } from '@prisma/client';
-
-const prisma = new PrismaClient();
+import prisma from "../prismaClient.js";
 
 const getAllLocations = async (req, res) => {
     const locations = await prisma.location.findMany();
