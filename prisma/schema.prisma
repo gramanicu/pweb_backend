@@ -14,12 +14,14 @@ model Country {
   id Int @id @default(autoincrement())
   name String @db.VarChar(255) @unique
   refugees Refugees[]
+  @@map("country")
 }
 
 model Language {
   id Int @id @default(autoincrement())
   name String @db.VarChar(255) @unique
   refugees  Refugees[]
+  @@map("language")
 }
 
 model Owner {
@@ -30,6 +32,7 @@ model Owner {
   phone String @db.VarChar(255)
 
   locations Location[]
+  @@map("owner")
 }
 
 model Provider {
@@ -40,6 +43,7 @@ model Provider {
   phone String @db.VarChar(255)
 
   services Service[]
+  @@map("provider")
 }
 
 model Refugees {
@@ -60,28 +64,24 @@ model Refugees {
   country Country @relation(fields: [id_country], references: [id], onDelete: Cascade)
   language Language @relation(fields: [id_language], references: [id], onDelete: Cascade)
   location Location? @relation(fields: [id_loc], references: [id], onDelete: SetNull)
+  @@map("refugees")
 }
 
 model Location {
   id Int @default(autoincrement())
   name String @db.VarChar(255)
   address String @db.VarChar(255) @unique
-  price Int @default(0)
-  max_adults Int @default(1)
-  max_children Int @default(0)
   id_owner Int
 
   refugee Refugees?
   owner Owner @relation(fields:[id_owner], references: [id], onDelete: Cascade)
   services Service[]
   @@id([id, id_owner])
+  @@map("location")
 }
 
 model Service {
   id Int @default(autoincrement())
-  price Int @default(0)
-  max_adults Int @default(1)
-  max_children Int @default(0)
   id_loc Int
   type Int
   description String @db.VarChar(255)
@@ -91,18 +91,9 @@ model Service {
   location Location @relation(fields: [id_loc], references: [id], onDelete: Cascade)
 
   @@id([id, id_loc, type, id_provider])
+  @@map("service")
 }
 
-// model Service_proposal {
-//   id Int @default(autoincrement())
-//   id_provider Int
-//   id_service Int
-//   id_loc Int
-//   approved Int @default(0)
-
-//   @@id([id, id_provider, id_service])
-  
-// }
 
 model AccomodationRequest {
   id Int @default(autoincrement())
@@ -111,5 +102,6 @@ model AccomodationRequest {
 
   refugee Refugees @relation(fields: [id_refugee], references: [id], onDelete: Cascade)
   @@id([id, id_refugee])
+  @@map("accomodationRequest")
 }
 
