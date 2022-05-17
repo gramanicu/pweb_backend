@@ -2,9 +2,10 @@ import express from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import * as dotenv from 'dotenv';
+import router from './routes/router.routes.js';
 import { auth, claimCheck, claimIncludes } from 'express-oauth2-jwt-bearer';
 
-import LocationRouter from './routes/locations.js';
+import LocationRouter from './routes/locations.routes.js';
 
 dotenv.config();
 
@@ -45,5 +46,3 @@ app.get(
         });
     }
 );
-
-app.use('/locations', checkJwt, LocationRouter);
