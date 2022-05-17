@@ -46,4 +46,4 @@ app.get(
     }
 );
 
-app.use('/locations', LocationRouter);
+app.use('/locations', checkJwt, LocationRouter);
