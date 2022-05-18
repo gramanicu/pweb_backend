@@ -7,15 +7,15 @@ const getAllLocations = async (req, res) => {
 };
 
 const addLocation = async (req, res) => {
-    return;
+    res.status(200).end();
 };
 
 const getLocation = async (req, res) => {
-    return;
+    res.status(200).end();
 };
 
 const leaveLocation = async (req, res) => {
-    return;
+    res.status(200).end();
 };
 
 const LocationController = { getAllLocations, addLocation, getLocation, leaveLocation };
