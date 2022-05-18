@@ -1,19 +1,19 @@
 import prisma from '../prismaClient.js';
 
 const getAllAccommodationRequests = async (req, res) => {
-    return;
+    res.status(200).end();
 };
 
 const addAccommodationRequest = async (req, res) => {
-    return;
+    res.status(200).end();
 };
 
 const getAccommodationRequest = async (req, res) => {
-    return;
+    res.status(200).end();
 };
 
 const respondAccommodationRequest = async (req, res) => {
-    return;
+    res.status(200).end();
 };
 
 const AccommodationRequestController = {
