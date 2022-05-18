@@ -72,9 +72,10 @@ model Location {
   address  String @unique @db.VarChar(255)
   id_owner Int
 
-  refugee  Refugee?
-  owner    Owner     @relation(fields: [id_owner], references: [id], onDelete: Cascade)
-  services Service[]
+  refugee              Refugee?
+  owner                Owner                  @relation(fields: [id_owner], references: [id], onDelete: Cascade)
+  services             Service[]
+  AccommodationRequest AccommodationRequest[]
   @@id([id, id_owner])
   @@map("locations")
 }
@@ -98,7 +99,11 @@ model AccommodationRequest {
   id_refugee Int                @unique
   status     requestStatusTypes @default(UNANSWERED)
 
-  refugee Refugee @relation(fields: [id_refugee], references: [id], onDelete: Cascade)
+  location Location @relation(fields: [locationId, locationId_owner], references: [id, id_owner])
+  refugee  Refugee  @relation(fields: [id_refugee], references: [id], onDelete: Cascade)
+
+  locationId       Int
+  locationId_owner Int
   @@id([id, id_refugee])
   @@map("accommodationRequests")
 }
