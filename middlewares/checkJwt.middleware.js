@@ -9,5 +9,4 @@ const checkJwt = auth({
     issuerBaseURL: process.env.ISSUER_BASE_URL,
 });
 
-
 export default checkJwt;
