@@ -1,0 +1,104 @@
+{
+    "swagger": "2.0",
+    "info": {
+      "version": "1.0.0",
+      "title": "Refugee App",
+      "description": "Refugee App API"
+    },
+
+    "host": "localhost:3001",
+    "basePath": "/",
+
+    "schemes": ["http://localhost:3001"],
+    "consumes": ["application/json"],
+    "produces": ["application/json"],
+
+    "apis": ["./routes/*.js"],
+
+    
+    "paths": {
+        "/users/new": {
+            "post": {
+                "tags": ["Users"],
+                "summary": "Add new user in system",
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+
+        "/locations": {
+            "get": {
+                "tags": ["Locations"],
+                "summary": "Get all locations in app",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Locations"
+                        }
+                    }
+                }
+            }
+        },
+
+        "/locations/{location_id}": {
+            "get": {
+                "tags": ["Locations"],
+                "summary": "Get specific location",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/Location"
+                        }
+                    }
+                }
+            }
+        }
+        
+    },
+    "definitions": {
+
+        "Location": {
+            "required": ["name", "_id", "address", "_id_owner"],
+            "properties": {
+              "_id": {
+                "type": "integer",
+                "uniqueItems": true
+              },
+              "name": {
+                "type": "string"
+              },
+              "address": {
+                "type": "string"
+              },
+              "owner": {
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string"
+                    },
+                    "phone": {
+                        "type": "string"
+                    },
+                    "_id": {
+                        "type": "number"
+                    }
+                  }
+              }  
+            }
+        },
+        "Locations": {
+            "type": "array",
+            "$ref": "#/definitions/Location"
+        }
+
+    }
+    
+}

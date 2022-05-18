@@ -7,6 +7,10 @@ import errorMiddleware from './middlewares/error.middleware.js';
 import checkJwt from './middlewares/checkJwt.middleware.js';
 import { auth, claimCheck, claimIncludes } from 'express-oauth2-jwt-bearer';
 
+import swaggerUI from 'swagger-ui-express';
+
+import swaggerDoc from './swagger.json' assert {type: "json"};
+
 dotenv.config();
 
 if (!process.env.ISSUER_BASE_URL || !process.env.AUDIENCE) {
@@ -42,5 +46,6 @@ app.get(
     }
 );
 
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 app.use('/', router);
 app.use(errorMiddleware);
