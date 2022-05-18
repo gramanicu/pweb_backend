@@ -23,6 +23,9 @@ const swaggerDoc = {
                 responses: {
                     200: {
                         description: 'OK',
+                        schema: {
+                            $ref: '#definitions/User',
+                        }
                     },
                 },
             },
@@ -223,6 +226,25 @@ const swaggerDoc = {
     },
 
     definitions: {
+
+        User: {
+            required: ['name', 'role', 'phone', 'email'],
+            properties: {
+              role: {
+                type: 'string'
+              },
+              name: {
+                type: 'string'
+              },
+              phone: {
+                type: 'string'
+              },
+              email: {
+                type: 'string'
+              }
+            }
+        },
+
         Location: {
             required: ['name', '_id', 'address'],
             properties: {
