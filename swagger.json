@@ -57,13 +57,54 @@
                     }
                 }
             }
+        },
+
+        "/locations/new": {
+            "post":{
+                "tags": ["Locations"],
+                "summary": "Add new location",
+                "parameters": [
+                    {
+                        "name": " Name",
+                        "description": "Location's name"
+                    },
+                    {
+                        "name": "Address",
+                        "description": "Location's address'"
+                    }
+                ],
+                "produces": ["application/json"],
+                "responses": {
+                    "200":{
+                        "description": "Location is added",
+                        "schema":{
+                            "$ref": "#/definitions/Location"
+                        }
+                    }
+                }
+            }
+        },
+
+        "locations/leave": {
+            "delete": {
+                "summary": "Delete location from refugee entry",
+                "tags": ["Locations"],
+                "responses":{
+                    "200":{
+                        "description": "Location is deleted from refugee entry",
+                        "schema":{
+                            "$ref":"#/definitions/Location"
+                        }
+                    }
+                }
+            }
         }
         
     },
     "definitions": {
 
         "Location": {
-            "required": ["name", "_id", "address", "_id_owner"],
+            "required": ["name", "_id", "address"],
             "properties": {
               "_id": {
                 "type": "integer",
@@ -74,26 +115,10 @@
               },
               "address": {
                 "type": "string"
-              },
-              "owner": {
-                  "type": "object",
-                  "properties": {
-                    "name": {
-                      "type": "string"
-                    },
-                    "email": {
-                      "type": "string"
-                    },
-                    "phone": {
-                        "type": "string"
-                    },
-                    "_id": {
-                        "type": "number"
-                    }
-                  }
-              }  
+              }
             }
         },
+
         "Locations": {
             "type": "array",
             "$ref": "#/definitions/Location"
