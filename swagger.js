@@ -267,6 +267,9 @@ const swaggerDoc = {
         User: {
             required: ['name', 'role', 'phone', 'email'],
             properties: {
+                auth0_id: {
+                    type: 'string',
+                },
                 role: {
                     type: 'string',
                     enum: ['owner', 'provider', 'refugee'],
