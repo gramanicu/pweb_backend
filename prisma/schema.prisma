@@ -84,6 +84,7 @@ model Service {
   id          Int          @default(autoincrement())
   id_loc      Int
   type        serviceTypes
+  name        String       @db.VarChar(255)
   description String       @db.VarChar(255)
   id_provider Int
 
