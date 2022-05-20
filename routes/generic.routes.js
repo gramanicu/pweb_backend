@@ -5,5 +5,7 @@ const GenericRouter = express.Router();
 
 GenericRouter.get('/countries', GenericController.getAllCountries);
 GenericRouter.get('/languages', GenericController.getAllLanguages);
+GenericRouter.get('/countries/:id', GenericController.getCountry);
+GenericRouter.get('/languages/:id', GenericController.getLanguage);
 
 export default GenericRouter;

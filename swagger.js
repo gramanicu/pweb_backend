@@ -40,6 +40,21 @@ const swaggerDoc = {
             },
         },
 
+        '/users/get': {
+            get: {
+                tags: ['Users'],
+                summary: 'Returns the authentified user',
+                responses: {
+                    200: {
+                        description: 'OK',
+                        schema: {
+                            $ref: '#/definitions/User',
+                        },
+                    },
+                },
+            },
+        },
+
         '/generic/countries': {
             get: {
                 tags: ['Countries'],
@@ -54,10 +69,54 @@ const swaggerDoc = {
                 },
             },
         },
+        '/generic/countries/{country_id}': {
+            get: {
+                tags: ['Countries'],
+                summary: 'Get specific country',
+                parameters: [
+                    {
+                        name: 'country_id',
+                        description: 'The id of the country',
+                        in: 'path',
+                    },
+                ],
+                responses: {
+                    200: {
+                        description: 'OK',
+                        schema: {
+                            $ref: '#/definitions/Country',
+                        },
+                    },
+                },
+            },
+        },
+
         '/generic/languages': {
             get: {
                 tags: ['Languages'],
                 summary: 'Get all languages in app',
+                responses: {
+                    200: {
+                        description: 'OK',
+                        schema: {
+                            $ref: '#/definitions/Language',
+                        },
+                    },
+                },
+            },
+        },
+
+        '/generic/languages/{language_id}': {
+            get: {
+                tags: ['Languages'],
+                summary: 'Get specific language',
+                parameters: [
+                    {
+                        name: 'language_id',
+                        description: 'The id of the language',
+                        in: 'path',
+                    },
+                ],
                 responses: {
                     200: {
                         description: 'OK',
@@ -88,6 +147,13 @@ const swaggerDoc = {
             get: {
                 tags: ['Locations'],
                 summary: 'Get specific location',
+                parameters: [
+                    {
+                        name: 'location_id',
+                        description: 'The id of the location',
+                        in: 'path',
+                    },
+                ],
                 responses: {
                     200: {
                         description: 'OK',
