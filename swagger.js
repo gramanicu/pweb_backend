@@ -9,7 +9,6 @@ const swaggerDoc = {
     host: 'localhost:3001',
     basePath: '/',
 
-    schemes: ['http://localhost:3001'],
     consumes: ['application/json'],
     produces: ['application/json'],
 
@@ -20,12 +19,51 @@ const swaggerDoc = {
             post: {
                 tags: ['Users'],
                 summary: 'Add new user in system',
+                parameters: [
+                    {
+                        name: 'User',
+                        description: 'Generic user. Not all parameters are needed for all user types',
+                        in: 'body',
+                        schema: {
+                            $ref: '#/definitions/User',
+                        },
+                    },
+                ],
                 responses: {
                     200: {
                         description: 'OK',
                         schema: {
                             $ref: '#definitions/User',
-                        }
+                        },
+                    },
+                },
+            },
+        },
+
+        '/generic/countries': {
+            get: {
+                tags: ['Countries'],
+                summary: 'Get all countries in app',
+                responses: {
+                    200: {
+                        description: 'OK',
+                        schema: {
+                            $ref: '#/definitions/Country',
+                        },
+                    },
+                },
+            },
+        },
+        '/generic/languages': {
+            get: {
+                tags: ['Languages'],
+                summary: 'Get all languages in app',
+                responses: {
+                    200: {
+                        description: 'OK',
+                        schema: {
+                            $ref: '#/definitions/Language',
+                        },
                     },
                 },
             },
@@ -226,23 +264,71 @@ const swaggerDoc = {
     },
 
     definitions: {
-
         User: {
             required: ['name', 'role', 'phone', 'email'],
             properties: {
-              role: {
-                type: 'string'
-              },
-              name: {
-                type: 'string'
-              },
-              phone: {
-                type: 'string'
-              },
-              email: {
-                type: 'string'
-              }
-            }
+                role: {
+                    type: 'string',
+                    enum: ['owner', 'provider', 'refugee'],
+                },
+                name: {
+                    type: 'string',
+                },
+                phone: {
+                    type: 'string',
+                },
+                email: {
+                    type: 'string',
+                },
+                id_country: {
+                    type: 'integer',
+                    uniqueItems: true,
+                    description: 'Country id required for a refugee',
+                },
+                id_language: {
+                    type: 'integer',
+                    uniqueItems: true,
+                    description: 'Language id required for a refugee',
+                },
+                no_adults: {
+                    type: 'integer',
+                    description: 'No of adults required for a refugee',
+                },
+                no_children: {
+                    type: 'integer',
+                    description: 'No of children required for a refugee',
+                },
+                notes: {
+                    type: 'string',
+                    description: 'Notes required for a refugee',
+                },
+            },
+        },
+
+        Country: {
+            required: ['_id', 'name'],
+            properties: {
+                _id: {
+                    type: 'integer',
+                    uniqueItems: true,
+                },
+                name: {
+                    type: 'string',
+                },
+            },
+        },
+
+        Language: {
+            required: ['_id', 'name'],
+            properties: {
+                _id: {
+                    type: 'integer',
+                    uniqueItems: true,
+                },
+                name: {
+                    type: 'string',
+                },
+            },
         },
 
         Location: {

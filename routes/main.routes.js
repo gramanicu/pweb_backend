@@ -6,6 +6,7 @@ import AccommodationRequestRouter from './accommodationRequests.routes.js';
 import auth0Middleware from '../middlewares/auth0.middleware.js';
 import checkJwt from '../middlewares/checkJwt.middleware.js';
 import notFoundRouter from './error.routes.js';
+import GenericRouter from './generic.routes.js';
 
 const router = express.Router();
 
@@ -13,6 +14,7 @@ router.use('/locations', checkJwt, auth0Middleware, LocationRouter);
 router.use('/users', UserRouter);
 router.use('/services', checkJwt, auth0Middleware, ServiceRouter);
 router.use('/accommodation-request', checkJwt, auth0Middleware, AccommodationRequestRouter);
+router.use('/generic', GenericRouter);
 
 // ALWAYS KEEP THIS LAST
 router.use('*', notFoundRouter);
