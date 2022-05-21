@@ -2,7 +2,6 @@ import { Prisma } from '@prisma/client';
 import prisma from '../prismaClient.js';
 
 const addUser = async (req, res) => {
-    console.log(req.body);
     try {
         if (req.body.role == 'owner') {
             const owner = await prisma.owner.create({
