@@ -1,3 +1,4 @@
+import auth0Middleware from '../middlewares/auth0.middleware.js';
 import prisma from '../prismaClient.js';
 
 const getAllLocations = async (req, res) => {
@@ -7,20 +8,55 @@ const getAllLocations = async (req, res) => {
 };
 
 const addLocation = async (req, res) => {
-    // TODO: verifica rol de OWNER
-    // TODO: adauga locatie in prisma.location
-    res.status(200).end();
+
+    const owner = await prisma.owner.findUnique({
+        where: {
+            auth0_id: res.locals.auth0_id
+        }
+    })
+
+    const location = await prisma.location.create({
+        data: {
+            name: req.body.name,
+            address: req.body.address,
+            phone: req.body.phone,
+            owner: {
+                connect: {
+                    id: owner.id
+                }
+            }
+        },
+    });
+    res.json(location);
 };
 
 const getLocation = async (req, res) => {
-    // TODO: selecteaza locatia din prisma.location dupa id
-    res.status(200).end();
+ 
+    const location = await prisma.location.findUnique({
+        where: {
+            id: res.id
+        },
+        include: {
+            owner: true,
+            services: true,
+        }
+    })
+
+    res.json(location);
 };
 
 const leaveLocation = async (req, res) => {
-    // TODO: verifica rol de refugiat
-    // TODO: face update la campul refugee.id_loc din db
-    res.status(200).end();
+    
+    const updateRefugee = await prisma.refugee.update({
+        where: {
+            auth0_id: res.locals.auth0_id,
+        },
+        data: {
+            id_loc: -1,
+        }
+    })
+
+    res.json(updateRefugee);
 };
 
 const LocationController = { getAllLocations, addLocation, getLocation, leaveLocation };

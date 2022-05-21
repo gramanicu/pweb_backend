@@ -6,9 +6,11 @@ import router from './routes/main.routes.js';
 import errorMiddleware from './middlewares/error.middleware.js';
 import checkJwt from './middlewares/checkJwt.middleware.js';
 import { auth, claimCheck, claimIncludes } from 'express-oauth2-jwt-bearer';
+import amqp from 'amqplib/callback_api.js'
 
 import swaggerUI from 'swagger-ui-express';
 import swaggerDoc from './swagger.js';
+import auth0Middleware from './middlewares/auth0.middleware.js';
 
 dotenv.config();
 
@@ -44,6 +46,32 @@ app.get(
         });
     }
 );
+
+amqp.connect('amqp://localhost', function(error0, connection) {
+    if (error0) {
+        throw error0;
+    }
+    connection.createChannel(function(error1, channel) {
+        if (error1) {
+        throw error1;
+        }
+        var queue = 'email_queue';
+        channel.assertQueue(queue, {
+        durable: true
+        });
+        channel.prefetch(1);
+        
+        console.log("Waiting for messages in %s", queue);
+        channel.consume(queue, function(msg) {
+        console.log("Received '%s'", msg.content.toString());
+        setTimeout(function() {
+            channel.ack(msg);
+        }, 1000);
+        });
+    });
+});
+
+app.use(auth0Middleware)
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 app.use('/', router);
