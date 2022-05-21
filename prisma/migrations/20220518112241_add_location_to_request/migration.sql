@@ -6,7 +6,7 @@
 
 */
 -- AlterTable
-ALTER TABLE `accommodationrequests` ADD COLUMN `locationId` INTEGER NOT NULL,
+ALTER TABLE `accommodationRequests` ADD COLUMN `locationId` INTEGER NOT NULL,
     ADD COLUMN `locationId_owner` INTEGER NOT NULL;
 
 -- AddForeignKey

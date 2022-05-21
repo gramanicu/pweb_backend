@@ -5,5 +5,5 @@
 
 */
 -- AlterTable
-ALTER TABLE `accommodationrequests` DROP COLUMN `approved`,
+ALTER TABLE `accommodationRequests` DROP COLUMN `approved`,
     ADD COLUMN `status` ENUM('UNANSWERED', 'ACCEPTED', 'DECLINED') NOT NULL DEFAULT 'UNANSWERED';

@@ -110,4 +110,4 @@ ALTER TABLE `services` ADD CONSTRAINT `services_id_provider_fkey` FOREIGN KEY (`
 ALTER TABLE `services` ADD CONSTRAINT `services_id_loc_fkey` FOREIGN KEY (`id_loc`) REFERENCES `locations`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `accommodationRequests` ADD CONSTRAINT `accommodationRequests_id_refugee_fkey` FOREIGN KEY (`id_refugee`) REFERENCES `refugees`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `accommodationRequests` ADD CONSTRAINT `accommodationrequests_id_refugee_fkey` FOREIGN KEY (`id_refugee`) REFERENCES `refugees`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;
