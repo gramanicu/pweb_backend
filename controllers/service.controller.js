@@ -1,24 +1,27 @@
 import prisma from '../prismaClient.js';
 
 const addService = async (req, res) => {
-
     const provider = await prisma.provider.findUnique({
         where: {
-            auth0_id: res.locals.auth0_id
-        }
-    })
+            auth0_id: res.locals.auth0_id,
+        },
+    });
 
     const service = await prisma.service.create({
         data: {
-            id_loc: req.body.id_loc,
             type: req.body.type,
             name: req.body.name,
             description: req.body.description,
             provider: {
                 connect: {
-                    id: provider.id
-                }
-            }
+                    id: provider.id,
+                },
+            },
+            location: {
+                connect: {
+                    id: req.body.id_loc,
+                },
+            },
         },
     });
     res.json(service).end();
@@ -26,23 +29,36 @@ const addService = async (req, res) => {
 };
 
 const getAllServices = async (req, res) => {
-    const services = await prisma.service.findMany();
+    const provider = await prisma.provider.findUnique({
+        where: {
+            auth0_id: res.locals.auth0_id,
+        },
+    });
 
-    res.json(services).end();
-    return;
+    if (provider) {
+        const services = await prisma.service.findMany({
+            where: {
+                id_provider: provider.id,
+            },
+            include: {
+                location: true,
+            },
+        });
+
+        return res.json(services).end();
+    }
 };
 
 const getService = async (req, res) => {
-
     const service = await prisma.service.findUnique({
         where: {
-            id: parseInt(req.params.id)
+            id: parseInt(req.params.id),
         },
         include: {
             location: true,
             provider: true,
-        }
-    })
+        },
+    });
     res.json(service).end();
     return;
 };

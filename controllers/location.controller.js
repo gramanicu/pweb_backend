@@ -51,10 +51,10 @@ const addLocation = async (req, res) => {
 };
 
 const getLocation = async (req, res) => {
-
-    if (parseInt(req.params.id) < 1 ) {
-        res.status(400).end();
+    if (isNaN(req.params.id) || parseInt(req.params.id) < 1) {
+        return res.status(400).end();
     }
+
     const location = await prisma.location.findUnique({
         where: {
             id: parseInt(req.params.id),
@@ -65,12 +65,10 @@ const getLocation = async (req, res) => {
         },
     });
 
-    
     if (location) {
         res.json(location).end();
         return;
-    }
-    else {
+    } else {
         res.status(404).end();
         return;
     }
@@ -82,7 +80,7 @@ const leaveLocation = async (req, res) => {
             auth0_id: res.locals.auth0_id,
         },
         data: {
-            id_loc: -1,
+            id_loc: null,
         },
     });
 

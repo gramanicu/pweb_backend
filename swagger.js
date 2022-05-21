@@ -264,22 +264,22 @@ const swaggerDoc = {
             },
         },
 
-        '/accomodation-request/{request_id}': {
+        '/accommodation-request/{request_id}': {
             get: {
-                tags: ['AccomodationRequests'],
+                tags: ['AccommodationRequests'],
                 summary: 'Get specific accomodation request from refugee',
                 responses: {
                     200: {
                         description: 'OK',
                         schema: {
-                            $ref: '#/definitions/AccomodationRequest',
+                            $ref: '#/definitions/AccommodationRequest',
                         },
                     },
                 },
             },
         },
 
-        '/accomodation-request/new': {
+        '/accommodation-request/new': {
             post: {
                 tags: ['AccomodationRequests'],
                 summary: 'Add accomodation request for particular location',
@@ -305,10 +305,10 @@ const swaggerDoc = {
             },
         },
 
-        '/accomodation-request/{request_id}': {
+        '/accommodation-request/{request_id}': {
             put: {
-                tags: ['AccomodationRequests'],
-                summary: 'Owner responds to accomodation request',
+                tags: ['AccommodationRequests'],
+                summary: 'Owner responds to accommodation request',
                 parameters: [
                     {
                         name: 'Request',
@@ -458,9 +458,13 @@ const swaggerDoc = {
         },
 
         AccomodationRequest: {
-            required: ['_id', 'location', 'type'],
+            required: ['_id', 'location_id'],
             properties: {
                 _id: {
+                    type: 'integer',
+                    uniqueItems: true,
+                },
+                location_id: {
                     type: 'integer',
                     uniqueItems: true,
                 },
