@@ -48,6 +48,7 @@ const addUser = async (req, res) => {
         console.log(error);
     }
     res.status(500).end();
+    return;
 };
 const getUser = async (req, res) => {
     if (res.locals.auth0_id) {
@@ -82,6 +83,7 @@ const getUser = async (req, res) => {
         }
     }
     res.status(500).end();
+    return;
 };
 
 const UserController = { addUser, getUser };

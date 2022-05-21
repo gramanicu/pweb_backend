@@ -3,7 +3,8 @@ import prisma from '../prismaClient.js';
 const getAllCountries = async (req, res) => {
     const countries = await prisma.country.findMany();
 
-    res.json(countries);
+    res.json(countries).end();
+    return;
 };
 
 const getCountry = async (req, res) => {
@@ -13,13 +14,15 @@ const getCountry = async (req, res) => {
         },
     });
 
-    res.json(country);
+    res.json(country).end();
+    return;
 };
 
 const getAllLanguages = async (req, res) => {
     const languages = await prisma.language.findMany();
 
-    res.json(languages);
+    res.json(languages).end();
+    return;
 };
 
 const getLanguage = async (req, res) => {
@@ -30,7 +33,8 @@ const getLanguage = async (req, res) => {
         },
     });
 
-    res.json(language);
+    res.json(language).end();
+    return;
 };
 
 const GenericController = { getAllLanguages, getAllCountries, getLanguage, getCountry };

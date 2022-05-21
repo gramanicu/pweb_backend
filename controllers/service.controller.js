@@ -21,17 +21,18 @@ const addService = async (req, res) => {
             }
         },
     });
-    res.json(service);
+    res.json(service).end();
+    return;
 };
 
 const getAllServices = async (req, res) => {
     const services = await prisma.service.findMany();
 
-    res.json(services);
+    res.json(services).end();
+    return;
 };
 
 const getService = async (req, res) => {
-    // TODO: cauta un serviciu dupa id si returneaza
 
     const service = await prisma.service.findUnique({
         where: {
@@ -42,7 +43,8 @@ const getService = async (req, res) => {
             provider: true,
         }
     })
-    res.json(service);
+    res.json(service).end();
+    return;
 };
 
 const ServiceController = { addService, getAllServices, getService };

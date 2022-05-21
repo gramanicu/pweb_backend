@@ -4,7 +4,8 @@ const getAllAccommodationRequests = async (req, res) => {
 
     const requests = await prisma.accommodationRequest.findMany();
 
-    res.json(requests);
+    res.json(requests).end();
+    return;
 };
 
 const addAccommodationRequest = async (req, res) => {
@@ -25,35 +26,8 @@ const addAccommodationRequest = async (req, res) => {
         },
     });
 
-    // TODO: send email
-
-    // amqp.connect('amqp://localhost', function(error, connection) {
-    //     if (error) {
-    //         throw error;
-    //     }
-    //     connection.createChannel(function(error1, channel) {
-    //         if (error1) {
-    //         throw error1;
-    //         }
-
-    //         let queue = 'email_queue';
-    //         let msg = `You have a demand for location ${res.id_loc}`;
-
-    //         channel.assertQueue(queue, {
-    //         durable: true
-    //         });
-    //         channel.sendToQueue(queue, Buffer.from(msg), {
-    //         persistent: true
-    //         });
-    //         console.log("Sent '%s'", msg);
-    //     });
-    //     setTimeout(function() {
-    //         connection.close();
-    //         process.exit(0)
-    //     }, 500);
-    // });
-
-    res.json(accomodationRequest);
+    res.json(accomodationRequest).end();
+    return;
 };
 
 const getAccommodationRequest = async (req, res) => {
@@ -68,14 +42,23 @@ const getAccommodationRequest = async (req, res) => {
         }
     })
 
-    res.json(accomodationRequest);
+    res.json(accomodationRequest).end();
+    return;
 
 };
 
 const respondAccommodationRequest = async (req, res) => {
-    // TODO: verifica rol de owner
-    // TODO: se modifica campul approved pt accomodationRequest
-    res.status(200).end();
+    const response = await prisma.accommodationRequest.update({
+        where: {
+            id: parseInt(req.params.id)
+        },
+        data: {
+            approved: req.body.status,
+        },
+    });
+
+    res.json(response).end();
+    return;
 };
 
 const AccommodationRequestController = {

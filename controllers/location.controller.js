@@ -14,14 +14,17 @@ const getAllLocations = async (req, res) => {
 
         if (ownerLocations) {
             res.json(ownerLocations.locations).end();
+            return;
         }
         res.status(404).end();
+        return;
     }
 
     const locations = await prisma.location.findMany();
 
     res.json(locations);
     res.status(200).end();
+    return;
 };
 
 const addLocation = async (req, res) => {
@@ -43,12 +46,11 @@ const addLocation = async (req, res) => {
             },
         },
     });
-    res.json(location);
+    res.json(location).end();
+    return;
 };
 
 const getLocation = async (req, res) => {
-
-
 
     if (parseInt(req.params.id) < 1 ) {
         res.status(400).end();
@@ -64,10 +66,14 @@ const getLocation = async (req, res) => {
     });
 
     
-    if (location)
+    if (location) {
         res.json(location).end();
-
-    res.status(404).end();
+        return;
+    }
+    else {
+        res.status(404).end();
+        return;
+    }
 };
 
 const leaveLocation = async (req, res) => {
@@ -80,7 +86,7 @@ const leaveLocation = async (req, res) => {
         },
     });
 
-    res.json(updateRefugee);
+    return res.json(updateRefugee).end();
 };
 
 const LocationController = { getAllLocations, addLocation, getLocation, leaveLocation };
