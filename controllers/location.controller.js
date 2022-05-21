@@ -21,6 +21,7 @@ const getAllLocations = async (req, res) => {
     const locations = await prisma.location.findMany();
 
     res.json(locations);
+    res.status(200).end();
 };
 
 const addLocation = async (req, res) => {
@@ -46,29 +47,27 @@ const addLocation = async (req, res) => {
 };
 
 const getLocation = async (req, res) => {
-    const owner = await prisma.owner.findUnique({
+
+
+
+    if (parseInt(req.params.id) < 1 ) {
+        res.status(400).end();
+    }
+    const location = await prisma.location.findUnique({
         where: {
-            auth0_id: res.locals.auth0_id,
+            id: parseInt(req.params.id),
+        },
+        include: {
+            owner: true,
+            services: true,
         },
     });
 
-    if (owner) {
-        const location = await prisma.location.findUnique({
-            where: {
-                id_id_owner: {
-                    id: parseInt(req.params.id),
-                    id_owner: owner.id,
-                },
-            },
-            include: {
-                owner: true,
-                services: true,
-            },
-        });
-        res.json(location);
-    }
+    
+    if (location)
+        res.json(location).end();
 
-    res.status(404);
+    res.status(404).end();
 };
 
 const leaveLocation = async (req, res) => {

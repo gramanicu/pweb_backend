@@ -96,3 +96,4 @@ app.get(
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 app.use('/', router);
 app.use(errorMiddleware);
+

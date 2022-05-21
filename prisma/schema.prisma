@@ -67,7 +67,7 @@ model Refugee {
 }
 
 model Location {
-  id       Int    @default(autoincrement())
+  id       Int  @id  @default(autoincrement())
   name     String @db.VarChar(255)
   address  String @unique @db.VarChar(255)
   id_owner Int
@@ -76,12 +76,12 @@ model Location {
   owner                Owner                  @relation(fields: [id_owner], references: [id], onDelete: Cascade)
   services             Service[]
   AccommodationRequest AccommodationRequest[]
-  @@id([id, id_owner])
+
   @@map("locations")
 }
 
 model Service {
-  id          Int          @default(autoincrement())
+  id          Int    @id   @default(autoincrement())
   id_loc      Int
   type        serviceTypes
   name        String       @db.VarChar(255)
@@ -91,21 +91,19 @@ model Service {
   provider Provider @relation(fields: [id_provider], references: [id], onDelete: Cascade)
   location Location @relation(fields: [id_loc], references: [id], onDelete: Cascade)
 
-  @@id([id, id_loc, type, id_provider])
   @@map("services")
 }
 
 model AccommodationRequest {
-  id         Int                @default(autoincrement())
+  id         Int        @id     @default(autoincrement())
   id_refugee Int                @unique
   status     requestStatusTypes @default(UNANSWERED)
 
-  location Location @relation(fields: [locationId, locationId_owner], references: [id, id_owner])
+  location Location @relation(fields: [locationId], references: [id])
   refugee  Refugee  @relation(fields: [id_refugee], references: [id], onDelete: Cascade)
 
   locationId       Int
-  locationId_owner Int
-  @@id([id, id_refugee])
+
   @@map("accommodationRequests")
 }
 

@@ -23,6 +23,7 @@ const getAllLanguages = async (req, res) => {
 };
 
 const getLanguage = async (req, res) => {
+
     const language = await prisma.language.findFirst({
         where: {
             id: parseInt(req.params.id),
