@@ -47,6 +47,28 @@ app.get(
     }
 );
 
+// amqp.connect('amqp://localhost', function(error, connection) {
+//     if (error) {
+//         throw error;
+//     }
+//     connection.createChannel(function(error1, channel) {
+//         if (error1) {
+//         throw error1;
+//         }
+
+//         let queue = 'email_queue';
+
+//         channel.assertQueue(queue, {
+//             durable: true
+//         });
+
+//     });
+//     setTimeout(function() {
+//         connection.close();
+//         process.exit(0)
+//     }, 500);
+// });
+
 // amqp.connect('amqp://localhost', function(error0, connection) {
 //     if (error0) {
 //         throw error0;
@@ -57,7 +79,7 @@ app.get(
 //         }
 //         var queue = 'email_queue';
 //         channel.assertQueue(queue, {
-//         durable: true
+//             durable: true
 //         });
 //         channel.prefetch(1);
         
@@ -70,8 +92,6 @@ app.get(
 //         });
 //     });
 // });
-
-app.use(auth0Middleware)
 
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 app.use('/', router);
