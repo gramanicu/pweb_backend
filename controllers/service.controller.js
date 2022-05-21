@@ -1,19 +1,48 @@
 import prisma from '../prismaClient.js';
 
 const addService = async (req, res) => {
-    // TODO: verifica rol de provider
-    // TODO: providerul adauga un nou serviciu in prisma.service
-    res.status(200).end();
+
+    const provider = await prisma.provider.findUnique({
+        where: {
+            auth0_id: res.locals.auth0_id
+        }
+    })
+
+    const service = await prisma.service.create({
+        data: {
+            id_loc: req.body.id_loc,
+            type: req.body.type,
+            name: req.body.name,
+            description: req.body.description,
+            provider: {
+                connect: {
+                    id: provider.id
+                }
+            }
+        },
+    });
+    res.json(service);
 };
 
 const getAllServices = async (req, res) => {
-    // TODO: returneaza toate serviciile din prisma.service
-    res.status(200).end();
+    const services = await prisma.service.findMany();
+
+    res.json(services);
 };
 
 const getService = async (req, res) => {
     // TODO: cauta un serviciu dupa id si returneaza
-    res.status(200).end();
+
+    const service = await prisma.service.findUnique({
+        where: {
+            id: parseInt(req.params.id)
+        },
+        include: {
+            location: true,
+            provider: true,
+        }
+    })
+    res.json(service);
 };
 
 const ServiceController = { addService, getAllServices, getService };

@@ -34,7 +34,7 @@ const getLocation = async (req, res) => {
  
     const location = await prisma.location.findUnique({
         where: {
-            id: res.id
+            id: parseInt(req.params.id)
         },
         include: {
             owner: true,
