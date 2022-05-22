@@ -2,20 +2,23 @@ import prisma from '../prismaClient.js';
 import { countries, languages } from '../library/constants.js';
 
 async function constants() {
-    const countriesLength = countries.length;
+    let c = countries.sort((a, b) => a.localeCompare(b));
+    let l = languages.sort((a, b) => a.localeCompare(b));
+
+    const countriesLength = c.length;
     for (var i = 0; i < countriesLength; i++) {
         await prisma.country.create({
             data: {
-                name: countries[i],
+                name: c[i],
             },
         });
     }
 
-    const languagesLength = languages.length;
+    const languagesLength = l.length;
     for (var i = 0; i < languagesLength; i++) {
         await prisma.language.create({
             data: {
-                name: languages[i],
+                name: l[i],
             },
         });
     }

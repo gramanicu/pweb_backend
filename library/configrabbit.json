@@ -1,4 +1,0 @@
-{
-    "amqp": "amqp://localhost",
-    "queue": "email-queue"  
-}

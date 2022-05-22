@@ -6,7 +6,6 @@ import router from './routes/main.routes.js';
 import errorMiddleware from './middlewares/error.middleware.js';
 import checkJwt from './middlewares/checkJwt.middleware.js';
 import { auth, claimCheck, claimIncludes } from 'express-oauth2-jwt-bearer';
-import amqp from 'amqplib/callback_api.js'
 
 import swaggerUI from 'swagger-ui-express';
 import swaggerDoc from './swagger.js';
@@ -47,8 +46,6 @@ app.get(
     }
 );
 
-
 app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerDoc));
 app.use('/', router);
 app.use(errorMiddleware);
-

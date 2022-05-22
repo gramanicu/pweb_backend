@@ -1,4 +1,5 @@
 import { requestStatusTypes } from '@prisma/client';
+import { enqueueMessage } from '../awqpClient.js';
 import prisma from '../prismaClient.js';
 
 const getAllAccommodationRequests = async (req, res) => {
@@ -43,6 +44,26 @@ const addAccommodationRequest = async (req, res) => {
             },
         },
     });
+
+    if (accommodationRequest) {
+        const location = await prisma.location.findUnique({
+            where: {
+                id: req.body.location_id,
+            },
+            include: { owner: true },
+        });
+
+        if (location) {
+            const owner = location.owner;
+            const email = owner.email;
+
+            enqueueMessage({
+                to: email,
+                subject: `New accommodation request`,
+                text: `${refugee.name}(${refugee.email}) requests accommodation at ${location.name}`,
+            });
+        }
+    }
 
     res.json(accommodationRequest).end();
     return;
@@ -101,7 +122,23 @@ const respondAccommodationRequest = async (req, res) => {
                 }
             });
 
-            // TODO - NOTIFIY USER
+            const location = await prisma.location.findUnique({
+                where: {
+                    id: accRequest.id_location,
+                },
+                include: { owner: true },
+            });
+
+            if (location) {
+                const owner = location.owner;
+                const email = refugee.email;
+
+                enqueueMessage({
+                    to: email,
+                    subject: `Accommodation request accepted`,
+                    text: `${owner.name} (${owner.email}), the owner of ${location.name} accepted your accommodation request.`,
+                });
+            }
         }
     }
 

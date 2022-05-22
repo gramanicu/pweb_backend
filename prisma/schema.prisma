@@ -56,7 +56,7 @@ model Refugee {
   no_adults   Int?    @default(1)
   no_children Int?    @default(0)
   notes       String  @db.VarChar(255)
-  id_loc      Int?    @unique
+  id_loc      Int?
 
   accommodationRequests AccommodationRequest[]
 
@@ -72,7 +72,7 @@ model Location {
   address  String @db.VarChar(255)
   id_owner Int
 
-  refugee              Refugee?
+  refugees             Refugee[]
   owner                Owner                  @relation(fields: [id_owner], references: [id], onDelete: Cascade)
   services             Service[]
   AccommodationRequest AccommodationRequest[]

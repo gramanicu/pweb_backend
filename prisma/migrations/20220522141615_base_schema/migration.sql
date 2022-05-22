@@ -55,7 +55,6 @@ CREATE TABLE `refugees` (
     `id_loc` INTEGER NULL,
 
     UNIQUE INDEX `refugees_auth0_id_key`(`auth0_id`),
-    UNIQUE INDEX `refugees_id_loc_key`(`id_loc`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -73,7 +72,7 @@ CREATE TABLE `locations` (
 CREATE TABLE `services` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `id_loc` INTEGER NOT NULL,
-    `type` ENUM('GENERIC', 'FOOD', 'CLOTHES', 'MEDICAL_SERVICE', 'TRANSLATION_SERVICE', 'LEISURE') NOT NULL,
+    `type` ENUM('GENERIC', 'FOOD', 'CLOTHES', 'MEDICAL', 'TRANSLATION', 'LEISURE') NOT NULL,
     `name` VARCHAR(255) NOT NULL,
     `description` VARCHAR(255) NOT NULL,
     `id_provider` INTEGER NOT NULL,
