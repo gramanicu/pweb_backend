@@ -20,6 +20,7 @@ const transport = nodemailer.createTransport(
 
 events.on('channelCreated', () => {
     if (channel) {
+        console.log('Started email service and connected to queue');
         channel.prefetch(1);
 
         channel.consume(queueName, data => {
